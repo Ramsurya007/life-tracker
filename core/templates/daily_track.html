@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Daily Track{% endblock %}
+{% block page_title %}Track Today{% endblock %}
+
+{% block content %}
+
+<form method="post">
+{% csrf_token %}
+
+<!-- ================= HABITS ================= -->
+<div class="card">
+  <h2>🧩 Habits</h2>
+
+  <div class="habit-track-grid">
+    {% for habit in habits %}
+      <div class="habit-track-card">
+        <h4>{{ habit.name }}</h4>
+
+        <div class="option-group">
+          <label class="opt done">
+            <input type="radio" name="habit_{{ habit.id }}" value="1">
+            Done
+          </label>
+
+          <label class="opt partial">
+            <input type="radio" name="habit_{{ habit.id }}" value="0.5">
+            Partial
+          </label>
+
+          <label class="opt missed">
+            <input type="radio" name="habit_{{ habit.id }}" value="0">
+            Missed
+          </label>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ================= NOFAP ================= -->
+<div class="card">
+  <h2>🔥 NoFap</h2>
+
+  <div class="option-group">
+    <label class="opt done">
+      <input type="radio" name="nofap" value="clean">
+      Clean
+    </label>
+
+    <label class="opt missed">
+      <input type="radio" name="nofap" value="relapse">
+      Relapse
+    </label>
+  </div>
+
+  <textarea
+    name="relapse_reason"
+    placeholder="Reason (only if relapse)"
+    class="full-input">
+  </textarea>
+</div>
+
+<!-- ================= DAILY NOTE ================= -->
+<div class="card">
+  <h2>📝 Daily Note <span class="required">*</span></h2>
+
+  <textarea
+    name="note"
+    required
+    placeholder="Write honestly about your day..."
+    class="full-input">
+  </textarea>
+
+  <div class="mood-row">
+    <label>Mood</label>
+    <select name="mood">
+      <option value="1">😞 Very Bad</option>
+      <option value="2">🙁 Bad</option>
+      <option value="3">😐 Neutral</option>
+      <option value="4">🙂 Good</option>
+      <option value="5">😄 Excellent</option>
+    </select>
+  </div>
+</div>
+
+<!-- ================= SUBMIT ================= -->
+<div class="card submit-card">
+  <button type="submit" class="primary-btn">
+    ✅ Submit Day
+  </button>
+</div>
+
+</form>
+
+{% endblock %}

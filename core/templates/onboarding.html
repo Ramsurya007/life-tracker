@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+{% block page_title %}Welcome{% endblock %}
+
+{% block content %}
+
+<div class="onboard-container">
+
+  <div class="card onboard-card">
+    <h1>👋 Welcome to Life Tracker</h1>
+    <p class="subtitle">
+      Start by choosing a few habits you want to build.
+      You can always change them later.
+    </p>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="onboard-grid">
+
+        <label class="onboard-option">
+          <input type="checkbox" name="habits" value="Coding">
+          <span class="icon">💻</span>
+          <span class="text">Coding</span>
+        </label>
+
+        <label class="onboard-option">
+          <input type="checkbox" name="habits" value="Workout">
+          <span class="icon">🏋️</span>
+          <span class="text">Workout</span>
+        </label>
+
+        <label class="onboard-option">
+          <input type="checkbox" name="habits" value="Reading">
+          <span class="icon">📚</span>
+          <span class="text">Reading</span>
+        </label>
+
+        <label class="onboard-option">
+          <input type="checkbox" name="habits" value="Meditation">
+          <span class="icon">🧘</span>
+          <span class="text">Meditation</span>
+        </label>
+
+      </div>
+
+      <div class="onboard-action">
+        <button type="submit" class="primary-btn">
+          🚀 Start Tracking
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

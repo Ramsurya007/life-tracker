@@ -1,0 +1,589 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* ================= APP LAYOUT ================= */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 240px;
+  background: #020617;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #1e293b;
+}
+
+.logo {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.nav a {
+  display: block;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.nav a.active,
+.nav a:hover {
+  background: #1e293b;
+  color: #38bdf8;
+}
+
+.logout {
+  background: none;
+  border: 1px solid #334155;
+  padding: 8px 12px;
+  color: #94a3b8;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ================= MAIN AREA ================= */
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 52px;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: #94a3b8;
+}
+
+.main {
+  padding: 20px;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ================= CARDS ================= */
+.card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+/* ================= KPI ================= */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.kpi-card h1 {
+  font-size: 34px;
+  margin: 6px 0;
+}
+
+.kpi-card.success { border-left: 4px solid #22c55e; }
+.kpi-card.warning { border-left: 4px solid #f97316; }
+.kpi-card.danger  { border-left: 4px solid #ef4444; }
+
+/* ================= GRID ================= */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 20px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ================= CHARTS ================= */
+.chart-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 14px;
+  height: 300px;
+}
+
+.chart-card canvas {
+  max-height: 220px !important;
+}
+
+/* ================= HEATMAP ================= */
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(53, 12px);
+  gap: 4px;
+}
+
+.heat {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.heat-1 { background: #450a0a; }
+.heat-2 { background: #92400e; }
+.heat-3 { background: #a16207; }
+.heat-4 { background: #166534; }
+
+.heat-legend {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* ================= BADGES ================= */
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.done    { background: #052e16; color: #22c55e; }
+.partial { background: #431407; color: #f97316; }
+.missed  { background: #450a0a; color: #ef4444; }
+
+/* ================= DAILY TRACK ================= */
+.habit-track-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.habit-track-card {
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.option-group {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.opt {
+  padding: 6px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #1e293b;
+  font-size: 12px;
+}
+
+.opt input { display: none; }
+
+.opt.done    { background: #052e16; }
+.opt.partial { background: #431407; }
+.opt.missed  { background: #450a0a; }
+
+.full-input {
+  width: 100%;
+  margin-top: 10px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  padding: 10px;
+  color: #e5e7eb;
+}
+
+/* ================= BUTTONS ================= */
+button,
+.primary-btn {
+  background: #6366f1;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.primary-btn.full-width {
+  width: 100%;
+}
+
+/* ================= DAY DETAIL ================= */
+.day-habit-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+/* ================= AUTH ================= */
+.auth-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 28px;
+  width: 360px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  color: white;
+}
+
+.error-text {
+  color: #ef4444;
+  margin-bottom: 10px;
+}
+
+/* ================= ONBOARD ================= */
+.onboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.onboard-option {
+  border: 1px solid #1e293b;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.onboard-option input { display: none; }
+
+/* ================= UTILS ================= */
+.center { text-align: center; }
+
+/* =====================================================
+   MOBILE & TABLET (FINAL, FIXED)
+   ===================================================== */
+
+/* Tablet & below */
+@media (max-width: 1024px) {
+
+  body {
+    display: flex;
+    justify-content: center;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 420px; /* mobile app width */
+    margin: 0 auto;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .logo {
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav a {
+    margin-bottom: 0;
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  .logout {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .topbar {
+    display: none;
+  }
+
+  .main {
+    padding: 14px;
+  }
+
+  .content-container {
+    max-width: 100%;
+  }
+
+  .kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    height: 260px;
+  }
+
+  .chart-card canvas {
+    max-height: 190px !important;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 600px) {
+
+  .kpi-row {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-card {
+    padding: 14px;
+  }
+
+  .kpi-card h1 {
+    font-size: 26px;
+  }
+
+  .habit-track-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .onboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  button,
+  .primary-btn {
+    width: 100%;
+  }
+
+  .chart-card {
+    height: 230px;
+    padding: 12px;
+  }
+
+  .chart-card canvas {
+    max-height: 170px !important;
+  }
+
+  .heatmap {
+    transform: scale(0.85);
+    transform-origin: left top;
+  }
+
+  .auth-card {
+    width: 90%;
+  }
+}
+/* ================= SELECTION UX ================= */
+
+/* Base option look */
+.opt {
+  position: relative;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+}
+
+/* Hover feedback */
+.opt:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* SELECTED STATE (magic happens here) */
+.opt:has(input:checked) {
+  opacity: 1;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px currentColor;
+}
+
+/* Specific colors when selected */
+.opt.done:has(input:checked) {
+  background: #052e16;
+  color: #22c55e;
+}
+
+.opt.partial:has(input:checked) {
+  background: #431407;
+  color: #f97316;
+}
+
+.opt.missed:has(input:checked) {
+  background: #450a0a;
+  color: #ef4444;
+}
+
+/* Radio/checkbox cursor */
+.opt {
+  cursor: pointer;
+}
+
+/* ================= ONBOARDING SELECTION ================= */
+
+.onboard-option {
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.onboard-option:hover {
+  opacity: 0.85;
+}
+
+.onboard-option:has(input:checked) {
+  opacity: 1;
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 0 2px #6366f1;
+}
+
+/* ================= ACCESSIBILITY ================= */
+.opt:focus-within,
+.onboard-option:focus-within {
+  outline: 2px solid #6366f1;
+}
+
+/* =====================================================
+   FINAL POLISH — MICRO UX & APP FEEL
+   ===================================================== */
+
+/* ---------------- CARD ENTRANCE ---------------- */
+.card,
+.kpi-card,
+.chart-card {
+  animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------- BUTTON FEEDBACK ---------------- */
+button,
+.primary-btn {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:active,
+.primary-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.25);
+}
+
+/* ---------------- CARD HOVER (DESKTOP ONLY) ---------------- */
+@media (hover: hover) {
+  .card:hover,
+  .kpi-card:hover,
+  .chart-card:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+}
+
+/* ---------------- SUBMIT CONFIRM FEEL ---------------- */
+/* Visual feedback after clicking submit */
+.submit-card button {
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-card button::after {
+  content: "✓ Saved";
+  position: absolute;
+  inset: 0;
+  background: #22c55e;
+  color: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.submit-card button:active::after {
+  opacity: 1;
+}
+
+/* ---------------- SCROLL SMOOTHNESS ---------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------------- FORM FOCUS POLISH ---------------- */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.25);
+}
+
+/* ---------------- EMPTY STATE POLISH ---------------- */
+.center p {
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+/* ---------------- REDUCE VISUAL NOISE ---------------- */
+p {
+  line-height: 1.5;
+}
+
+/* ---------------- MOBILE APP FEEL ---------------- */
+@media (max-width: 600px) {
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .app {
+    box-shadow: 0 0 0 1px #1e293b;
+  }
+}

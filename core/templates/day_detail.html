@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load dict_extras %}
+
+{% block title %}Day Detail{% endblock %}
+{% block page_title %}Day Review{% endblock %}
+
+{% block content %}
+
+<!-- ================= DAY SUMMARY ================= -->
+<div class="day-summary card
+  {% if score.status == 'STRONG' %}success
+  {% elif score.status == 'AVERAGE' %}warning
+  {% else %}danger{% endif %}
+">
+  <div>
+    <h4>📅 {{ day }}</h4>
+    <h1>{{ score.score }}%</h1>
+    <span>{{ score.status }}</span>
+  </div>
+</div>
+
+<!-- ================= HABITS ================= -->
+<div class="card">
+  <h2>🧩 Habits</h2>
+
+  <div class="day-habit-list">
+    {% for habit in habits %}
+      {% with e=entries|get_item:habit.id %}
+      <div class="day-habit-row">
+
+        <span class="habit-name">{{ habit.name }}</span>
+
+        {% if e %}
+          {% if e.status == 1 %}
+            <span class="badge done">Done</span>
+          {% elif e.status == 0.5 %}
+            <span class="badge partial">Partial</span>
+          {% else %}
+            <span class="badge missed">Missed</span>
+          {% endif %}
+        {% else %}
+          <span class="badge missed">Missed</span>
+        {% endif %}
+
+      </div>
+      {% endwith %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ================= NOFAP ================= -->
+<div class="card">
+  <h2>🔥 NoFap</h2>
+
+  {% if nofap %}
+    {% if nofap.is_clean %}
+      <p class="badge done">Clean</p>
+    {% else %}
+      <p class="badge missed">Relapse</p>
+      {% if nofap.relapse_reason %}
+        <p class="note-text">Reason: {{ nofap.relapse_reason }}</p>
+      {% endif %}
+    {% endif %}
+  {% else %}
+    <p class="badge missed">No entry (treated as relapse)</p>
+  {% endif %}
+</div>
+
+<!-- ================= DAILY NOTE ================= -->
+<div class="card">
+  <h2>📝 Daily Reflection</h2>
+
+  {% if note %}
+    <p class="note-text">{{ note.note }}</p>
+    <p class="mood">Mood: {{ note.get_mood_display }}</p>
+  {% else %}
+    <p class="warning">No note written</p>
+  {% endif %}
+</div>
+
+{% endblock %}

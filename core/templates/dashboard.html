@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- ================= KPI ROW ================= -->
+<div class="kpi-row">
+
+  <div class="kpi-card">
+    <h4>📅 Today</h4>
+    <h2>{{ today }}</h2>
+  </div>
+
+  <div class="kpi-card
+    {% if score.status == 'STRONG' %}success
+    {% elif score.status == 'AVERAGE' %}warning
+    {% else %}danger{% endif %}
+  ">
+    <h4>Daily Life Score</h4>
+    <h1>{{ score.score }}%</h1>
+    <span>{{ score.status }}</span>
+  </div>
+
+  <div class="kpi-card {% if score.nofap_relapse %}danger{% else %}success{% endif %}">
+    <h4>🔥 NoFap</h4>
+    {% if score.nofap_relapse %}
+      <h2>Relapse</h2>
+    {% else %}
+      <h2>{{ nofap_streak }} days</h2>
+    {% endif %}
+  </div>
+
+  <div class="kpi-card {% if score.bad_habit_failed %}danger{% else %}success{% endif %}">
+    <h4>🚫 Bad Habits</h4>
+    {% if score.bad_habit_failed %}
+      <h2>Failed</h2>
+    {% else %}
+      <h2>Clean</h2>
+    {% endif %}
+  </div>
+
+</div>
+
+<!-- ================= ACTIONS ================= -->
+<div class="card action-row">
+  <a href="{% url 'export-excel' %}">
+    <button>⬇ Export Excel</button>
+  </a>
+  <a href="{% url 'export-pdf' %}">
+    <button>📄 Export PDF</button>
+  </a>
+</div>
+
+<!-- ================= MAIN GRID ================= -->
+<div class="main-grid">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-column">
+
+    <!-- WEEKLY SUMMARY -->
+    <div class="card">
+      <h3>📊 Weekly Summary</h3>
+      <ul class="summary-list">
+        {% for day in weekly %}
+          <li>
+            <span>{{ day.date }}</span>
+            <strong>{{ day.score }}%</strong>
+            <span class="{{ day.status|lower }}">{{ day.status }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- MONTHLY SUMMARY -->
+    <div class="card">
+      <h3>📆 Monthly Summary</h3>
+      <p>Average: <strong>{{ monthly.avg_score }}%</strong></p>
+      <p>Best Day: <strong>{{ monthly.best_day }}%</strong></p>
+      <p>Worst Day: <strong>{{ monthly.worst_day }}%</strong></p>
+      <p>NoFap Clean Days:
+        <strong>{{ monthly.nofap_clean_days }}</strong> / {{ monthly.total_days }}
+      </p>
+    </div>
+
+    <!-- NOFAP ANALYTICS -->
+    <div class="card">
+      <h3>🔥 NoFap Analytics</h3>
+      <p>Current Streak: <strong>{{ current_streak }} days</strong></p>
+      <p>Best Streak: <strong>{{ best_streak }} days</strong></p>
+      <p>Relapses (30 days): <strong>{{ relapses_30 }}</strong></p>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-column">
+
+    <!-- WEEKLY BAR -->
+    <div class="chart-card">
+      <h3>📊 Weekly Discipline</h3>
+      <canvas id="weeklyChart"></canvas>
+    </div>
+
+    <!-- MONTHLY LINE -->
+    <div class="chart-card">
+      <h3>📈 Monthly Trend</h3>
+      <canvas id="monthlyChart"></canvas>
+    </div>
+
+    <!-- NOFAP DOUGHNUT -->
+    <div class="chart-card">
+      <h3>🔥 NoFap (This Month)</h3>
+      <canvas id="nofapChart"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= HEATMAP ================= -->
+<div class="card">
+  <h3>🧱 Yearly Discipline Heatmap</h3>
+
+  <div class="heatmap">
+    {% for day in heatmap %}
+      <a href="{% url 'day-detail' day.date|date:'Y-m-d' %}"
+         title="{{ day.date }} — {{ day.score }}%">
+        <div class="heat {{ day.level }}"></div>
+      </a>
+    {% endfor %}
+  </div>
+
+  <p class="heat-legend">
+    🟥 Fail &nbsp; 🟧 Weak &nbsp; 🟨 Average &nbsp; 🟩 Strong
+  </p>
+</div>
+
+<!-- ================= EMPTY STATE ================= -->
+{% if not weekly %}
+<div class="card center">
+  <p>No data yet. Start tracking today 💪</p>
+  <a href="{% url 'daily-track' %}">
+    <button>Track Today</button>
+  </a>
+</div>
+{% endif %}
+
+<!-- ================= CHART JS ================= -->
+<script>
+  new Chart(document.getElementById('weeklyChart'), {
+    type: 'bar',
+    data: {
+      labels: {{ weekly_labels|safe }},
+      datasets: [{
+        label: 'Daily Score %',
+        data: {{ weekly_scores|safe }}
+      }]
+    },
+    options: { scales: { y: { beginAtZero: true, max: 100 } } }
+  });
+
+  new Chart(document.getElementById('monthlyChart'), {
+    type: 'line',
+    data: {
+      labels: {{ monthly_labels|safe }},
+      datasets: [{
+        label: 'Daily Score %',
+        data: {{ monthly_scores|safe }},
+        tension: 0.3
+      }]
+    },
+    options: { scales: { y: { beginAtZero: true, max: 100 } } }
+  });
+
+  new Chart(document.getElementById('nofapChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Clean Days', 'Relapse Days'],
+      datasets: [{
+        data: [{{ nofap_clean }}, {{ nofap_relapse }}]
+      }]
+    }
+  });
+</script>
+
+{% endblock %}

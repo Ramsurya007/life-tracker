@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}HabitFlow{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <h2 class="logo">⚡ HabitFlow</h2>
+
+      <nav class="nav">
+        <a href="{% url 'dashboard' %}"
+           class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+          📊 Dashboard
+        </a>
+
+        <a href="{% url 'daily-track' %}"
+           class="{% if request.resolver_match.url_name == 'daily-track' %}active{% endif %}">
+          📝 Track Today
+        </a>
+      </nav>
+    </div>
+
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="logout">Logout</button>
+    </form>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <div class="main-area">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <span class="page-title">
+        {% block page_title %}{% endblock %}
+      </span>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main class="main">
+      <div class="content-container">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+  </div>
+
+</div>
+
+</body>
+</html>
